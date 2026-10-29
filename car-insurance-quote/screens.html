@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Kova Quote Screens</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="prototype.css">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #E8EBF0; color: #161922; font-family: var(--font-body); }
+.board { width: 1440px; padding: 64px 60px 96px; }
+.board > h1 { font-family: var(--font-display); font-weight: 760; font-size: 40px; line-height: 1.1; margin: 0 0 6px; }
+.board > h2 { font-family: var(--font-display); font-weight: 720; font-size: 30px; margin: 96px 0 6px; }
+.board > .sub { margin: 0 0 40px; color: #555D6D; font-size: 17px; }
+.row { display: flex; flex-wrap: wrap; gap: 64px 60px; align-items: flex-start; }
+.frame-wrap { width: 390px; }
+.frame-name { margin: 0 0 12px; font-weight: 650; font-size: 15px; color: #3B4250; }
+.frame { width: 390px; background: #FFFFFF; overflow: hidden; }
+.frame .ph-screen { height: auto; min-height: 844px; overflow: visible; display: flex; flex-direction: column; }
+.frame .ph-form { flex: 1; }
+.frame .ph-top, .frame .ph-bar { position: static; }
+.ph-logo, .ph-h { font-stretch: 100%; }
+.ds { display: grid; grid-template-columns: repeat(3, 390px); gap: 40px 60px; align-items: start; }
+.card { background: #FFFFFF; border-radius: 16px; padding: 24px; }
+.card > .ph-label { margin-bottom: 14px; }
+.swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.sw { display: grid; gap: 6px; font-size: 13px; }
+.sw i { display: block; height: 56px; border-radius: 10px; border: 1px solid #D6DAE1; }
+.sw b { font-size: 14px; }
+.sw span { font-family: var(--font-mono); color: #576071; }
+.type { display: grid; gap: 16px; }
+.type div { display: grid; gap: 2px; }
+.type small { font-family: var(--font-mono); font-size: 11.5px; color: #576071; }
+.stack { display: grid; gap: 14px; color: var(--ph-ink); font-size: 16px; line-height: 1.45; }
+</style>
+</head>
+<body>
+<div class="board">
+  <h1>Kova · Car insurance quote</h1>
+  <p class="sub">Mobile web flow. Frames are 390 × 844. Long screens grow to fit their content.</p>
+  <div class="row" id="screens"></div>
+
+  <h2>Design system</h2>
+  <p class="sub">Colours, type and components used across the flow.</p>
+  <div class="ds">
+    <div class="card">
+      <p class="ph-label">Colour</p>
+      <div class="swatches">
+        <div class="sw"><i style="background:#1C6753"></i><b>Pine</b><span>#1C6753</span></div>
+        <div class="sw"><i style="background:#14171F"></i><b>Ink</b><span>#14171F</span></div>
+        <div class="sw"><i style="background:#576071"></i><b>Muted</b><span>#576071</span></div>
+        <div class="sw"><i style="background:#CDD2DA"></i><b>Line</b><span>#CDD2DA</span></div>
+        <div class="sw"><i style="background:#F1F3F6"></i><b>Soft</b><span>#F1F3F6</span></div>
+        <div class="sw"><i style="background:#FFFFFF"></i><b>White</b><span>#FFFFFF</span></div>
+        <div class="sw"><i style="background:#F6D3DD"></i><b>Slip</b><span>#F6D3DD</span></div>
+        <div class="sw"><i style="background:#8A2246"></i><b>Slip ink</b><span>#8A2246</span></div>
+        <div class="sw"><i style="background:#B3261E"></i><b>Error</b><span>#B3261E</span></div>
+        <div class="sw"><i style="background:#1D5FD6"></i><b>Focus</b><span>#1D5FD6</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="ph-label">Type</p>
+      <div class="type">
+        <div><small>Price · Archivo ExtraBold 46</small><p class="ph-price" style="margin:0">$247</p></div>
+        <div><small>Heading · Archivo Bold 25</small><h3 class="ph-h">What is your postal code?</h3></div>
+        <div><small>Body · Public Sans Regular 16</small><p class="ph-p" style="margin:0">It takes about 5 minutes. You don't need an account.</p></div>
+        <div><small>Hint · Public Sans Regular 15</small><p class="ph-hint" style="margin:0">We use it to check rates in your area.</p></div>
+        <div><small>Label · IBM Plex Mono Medium 11.5</small><p class="ph-label" style="margin:0">Early estimate</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="ph-label">Buttons and links</p>
+      <div class="stack">
+        <button class="ph-btn" type="button">Continue</button>
+        <button class="ph-btn secondary" type="button">Talk to a broker</button>
+        <button class="ph-help" type="button" style="justify-self:start">Talk to a broker</button>
+        <button class="ph-link" type="button" style="justify-self:start">Save and finish later</button>
+      </div>
+    </div>
+    <div class="card">
+      <p class="ph-label">Inputs</p>
+      <div class="stack">
+        <div class="ph-field"><label class="ph-flabel" for="ds-a">Postal code</label><input class="ph-input ph-w-short" id="ds-a" value="M5V 3L9"></div>
+        <div class="ph-field"><label class="ph-flabel" for="ds-b">Postal code, error</label><p class="ph-err">Enter your postal code</p><input class="ph-input ph-w-short" id="ds-b" aria-invalid="true"></div>
+        <div class="ph-errsum"><h3>There is a problem</h3><ul><li><a href="#ds-b">Enter your postal code</a></li></ul></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="ph-label">Choices</p>
+      <div class="stack">
+        <label class="ph-opt" for="ds-r1"><input type="radio" id="ds-r1" name="ds-r"><span>G (full licence)</span></label>
+        <label class="ph-opt" for="ds-r2"><input type="radio" id="ds-r2" name="ds-r" checked><span>G2</span></label>
+        <label class="ph-opt ph-addon" for="ds-c1"><input type="checkbox" id="ds-c1" checked><span class="ph-addon-text"><strong>Collision</strong><span>Repairs your car after a crash.</span></span><span class="ph-addon-price">+$38</span></label>
+      </div>
+    </div>
+    <div class="card">
+      <p class="ph-label">Feedback</p>
+      <div class="stack">
+        <div class="ph-est"><p class="ph-label">Early estimate</p><p class="ph-est-num">$185 to $270 <span>a month</span></p><p class="ph-small">3 more questions for your exact price.</p></div>
+        <div class="ph-prog"><p class="ph-step">Step 3 of 6</p><div class="ph-bar-track"><span style="width:50%"></span></div></div>
+        <ul class="ph-chips"><li>2019 Honda Civic</li><li>G2 licence</li><li>Clean record</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="prototype.js"></script>
+<script>
+(() => {
+  const s = Kova.sample();
+  const plate = Object.assign(Kova.sample(), { carMode: "plate", plate: "CABC 123", plateFound: true });
+  const booked = Object.assign(Kova.sample(), { slot: Kova.SLOTS[1], phone: "4165550123" });
+  const saved = Object.assign(Kova.sample(), { email: "amira@example.com" });
+  const F = [
+    ["01 Start", "start", Kova.blank(), null],
+    ["02 Postal code", "postal", Kova.blank(), null],
+    ["03 Postal code, error", "postal", Kova.blank(), { postal: "Enter your postal code" }],
+    ["04 Car", "car", s, null],
+    ["05 Car, plate found", "car", plate, null],
+    ["06 Date of birth", "dob", s, null],
+    ["07 Licence, early estimate", "licence", s, null],
+    ["08 Driving experience", "experience", s, null],
+    ["09 Driving record", "record", s, null],
+    ["10 Coverage", "coverage", s, null],
+    ["11 Price", "price", s, null],
+    ["12 Talk to a broker", "broker", Object.assign(Kova.sample(), { slot: Kova.SLOTS[1], phone: "416 555 0123" }), null],
+    ["13 Call booked", "done", booked, null],
+    ["14 Save for later", "save", saved, null],
+    ["15 Email sent", "saved", saved, null]
+  ];
+  document.getElementById("screens").innerHTML = F.map((f, i) => `<div class="frame-wrap"><p class="frame-name">${f[0]}</p><div class="frame"><div class="ph-screen">${Kova.screen(f[1], f[2], "f" + i, f[3])}</div></div></div>`).join("");
+})();
+</script>
+</body>
+</html>

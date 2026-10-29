@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sulejman Kanapari | Portfolio</title>
+<meta name="description" content="Portfolio of Sulejman Kanapari: UX case studies and software projects.">
+<meta property="og:title" content="Sulejman Kanapari | Portfolio">
+<meta property="og:description" content="UX case studies and software projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="car-insurance-quote/prototype.css">
+<style>
+:root {
+  --paper: #F4F5F7;
+  --surface: #FFFFFF;
+  --ink: #161922;
+  --muted: #555D6D;
+  --rule: #D6DAE1;
+  --pine: #1C6753;
+  --focus: #1D5FD6;
+  --frame: #1B1E26;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #111318; --surface: #191C23; --ink: #E8EBF1; --muted: #A4ABB9; --rule: #2C313C; --pine: #7FCCB3; --focus: #8DB4FF; --frame: #3B404C; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: var(--pine); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.wrap { max-width: 1120px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 20px; padding-block: 16px; border-bottom: 1px solid var(--rule); }
+.top .who { font-weight: 650; color: var(--ink); text-decoration: none; }
+.top nav { display: flex; gap: 20px; font-size: 15.5px; }
+.top nav a { color: var(--ink); text-decoration: none; min-height: 40px; display: inline-flex; align-items: center; }
+.top nav a:hover { color: var(--pine); }
+.label, .eyebrow { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1, h2 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-stretch: 110%; font-weight: 740; font-size: clamp(32px, 5vw, 54px); line-height: 1.06; letter-spacing: -0.012em; margin-block: 12px 18px; max-width: 20ch; }
+.intro { padding-block: 64px 48px; }
+.lede { font-size: 19px; max-width: 58ch; margin: 0; }
+section { padding-block: 40px; border-top: 1px solid var(--rule); }
+.project { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: center; margin-top: 16px; padding: 28px; background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; color: var(--ink); text-decoration: none; }
+@media (min-width: 900px) { .project { grid-template-columns: minmax(0, 1fr) auto; } }
+.title-link { color: var(--ink); text-decoration: none; }
+.title-link:hover { color: var(--pine); text-decoration: underline; }
+.project h2 { font-stretch: 106%; font-weight: 720; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; margin-bottom: 10px; }
+.project p { margin: 0 0 14px; max-width: 54ch; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; }
+.tags li { font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; border: 1px solid var(--rule); border-radius: 999px; padding: 4px 10px; color: var(--muted); }
+.more { font-weight: 650; color: var(--pine); text-decoration: underline; text-underline-offset: 3px; }
+.art { display: flex; gap: 12px; }
+.art .mini { width: 155px; height: 306px; overflow: hidden; flex: none; }
+.art .mini .phone { width: 344px; max-width: none; transform: scale(0.45); transform-origin: top left; box-shadow: none; }
+@media (max-width: 560px) { .art .mini:nth-child(3) { display: none; } }
+.others { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 0; }
+.others li { display: grid; gap: 2px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+.others a { font-family: var(--font-display); font-weight: 680; font-size: 19px; }
+.others span { color: var(--muted); font-size: 16px; }
+.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: 14px; }
+.contact a { min-height: 40px; display: inline-flex; align-items: center; }
+footer { padding-block: 28px 48px; color: var(--muted); font-size: 14.5px; }
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="who" href="./">Sulejman Kanapari</a>
+  <nav aria-label="Main"><a href="#work">Work</a><a href="#contact">Contact</a></nav>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <p class="eyebrow">Toronto, Canada</p>
+    <h1>Clear, simple digital products, from research to working prototype</h1>
+    <p class="lede">I have a background in software, cloud and data, and I am studying Applied A.I. Solutions Development at George Brown College. I enjoy turning long forms and complicated processes into steps people can finish.</p>
+  </div>
+
+  <section id="work" aria-labelledby="work-title">
+    <p class="label" id="work-title">Case study</p>
+    <article class="project">
+      <div>
+        <h2><a class="title-link" href="car-insurance-quote/">A car insurance quote you can finish on your phone</a></h2>
+        <p>A mobile quote flow for a fictional Ontario insurer. It shows an early estimate after three questions, explains every coverage in plain words and hands off to a broker without repeating questions.</p>
+        <ul class="tags"><li>UX research</li><li>Journey map</li><li>User flow</li><li>Accessibility</li><li>Prototype</li></ul>
+        <a class="more" href="car-insurance-quote/">Read the case study</a>
+      </div>
+      <div class="art" id="art" aria-hidden="true"></div>
+    </article>
+
+    <p class="label" style="margin-top:44px">Other projects</p>
+    <ul class="others">
+      <li><a href="https://github.com/sulejmankanaparii-sys/ReviewIQ">ReviewIQ</a><span>AI web app that turns customer reviews into sentiment and aspect insights.</span></li>
+      <li><a href="https://drive.google.com/drive/folders/1EcLXHr2e6FD9UZUyXsCxfoIDQuwqV4MW">Resume Scanner &amp; Job Matcher</a><span>Serverless AWS app that reads resumes and recommends matching jobs.</span></li>
+    </ul>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-title">
+    <p class="label" id="contact-title">Contact</p>
+    <div class="contact">
+      <span>Kanaparisulejman@gmail.com</span>
+      <a href="https://www.linkedin.com/in/sulejman-k-6a522625a">LinkedIn</a>
+      <a href="https://github.com/sulejmankanaparii-sys">GitHub</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">Sulejman Kanapari, Toronto</footer>
+
+<script src="car-insurance-quote/prototype.js"></script>
+<script>
+(() => {
+  const s = Kova.sample();
+  const shots = [["start", Kova.blank()], ["licence", s], ["price", s]];
+  document.getElementById("art").innerHTML = shots.map((x, i) => `<div class="mini"><div class="phone" inert><div class="ph-screen">${Kova.screen(x[0], x[1], "h" + i, null)}</div></div></div>`).join("");
+})();
+</script>
+</body>
+</html>

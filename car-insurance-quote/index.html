@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Car Insurance Quote | Sulejman Kanapari</title>
+<meta name="description" content="UX case study: a mobile car insurance quote flow with a clickable prototype, by Sulejman Kanapari.">
+<meta property="og:title" content="A car insurance quote you can finish on your phone">
+<meta property="og:description" content="UX case study by Sulejman Kanapari: research, journey map, user flow, accessibility and a clickable prototype.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="prototype.css">
+<style>
+:root {
+  --paper: #F4F5F7;
+  --surface: #FFFFFF;
+  --ink: #161922;
+  --muted: #555D6D;
+  --rule: #D6DAE1;
+  --slip: #F6D3DD;
+  --slip-ink: #8A2246;
+  --pine: #1C6753;
+  --focus: #1D5FD6;
+  --frame: #1B1E26;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ph-bg: #FFFFFF;
+  --ph-ink: #14171F;
+  --ph-muted: #576071;
+  --ph-line: #CDD2DA;
+  --ph-soft: #F1F3F6;
+  --ph-brand: #1C6753;
+  --ph-brand-ink: #FFFFFF;
+  --ph-error: #B3261E;
+  --ph-slip: #F6D3DD;
+  --ph-slip-ink: #8A2246;
+  --ph-focus: #1D5FD6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111318; --surface: #191C23; --ink: #E8EBF1; --muted: #A4ABB9; --rule: #2C313C;
+    --slip: #4B1F2E; --slip-ink: #F6C8D5; --pine: #7FCCB3; --focus: #8DB4FF; --frame: #3B404C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #111318; --surface: #191C23; --ink: #E8EBF1; --muted: #A4ABB9; --rule: #2C313C;
+  --slip: #4B1F2E; --slip-ink: #F6C8D5; --pine: #7FCCB3; --focus: #8DB4FF; --frame: #3B404C;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: var(--pine); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.print-only { display: none; }
+.wrap { max-width: 1120px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.prose { max-width: 68ch; }
+.prose p { margin: 0 0 1em; }
+
+.top { border-bottom: 1px solid var(--rule); }
+.top-in { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; padding-block: 14px; font-size: 15px; }
+.top .who { font-weight: 650; color: var(--ink); text-decoration: none; }
+.top .who:hover { color: var(--pine); }
+.top .kind, .eyebrow, .label { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+h1 { font-stretch: 112%; font-weight: 760; font-size: clamp(34px, 5.4vw, 60px); line-height: 1.03; letter-spacing: -0.015em; margin-block: 14px 18px; }
+h2.sec { font-stretch: 108%; font-weight: 720; font-size: clamp(27px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.01em; margin-block: 8px 20px; }
+h2.hmw { font-stretch: 104%; font-weight: 660; font-size: clamp(24px, 3vw, 33px); line-height: 1.25; max-width: 32ch; margin-block: 10px 8px; }
+h3 { font-stretch: 104%; font-weight: 680; font-size: 20px; line-height: 1.25; }
+h3.sub { font-stretch: 108%; font-weight: 700; font-size: 25px; margin-block: 60px 6px; }
+.sub-note { color: var(--muted); font-size: 15px; margin: 6px 0 0; }
+
+.hero { padding-block: 44px 48px; }
+.hero-grid { display: grid; gap: 44px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 940px) { .hero-grid { grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); } }
+.lede { font-size: 19.5px; line-height: 1.55; max-width: 60ch; margin: 0 0 28px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px 28px; margin: 0; padding-top: 22px; border-top: 1px solid var(--rule); }
+.facts div { min-width: 0; }
+.facts dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.facts dd { margin: 4px 0 0; font-size: 15.5px; line-height: 1.45; }
+.proto-col { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
+.proto-note { font-size: 14.5px; color: var(--muted); max-width: 344px; text-align: center; margin: 0; }
+
+.process { border-block: 1px solid var(--rule); background: var(--surface); }
+.process ol { list-style: none; margin: 0; padding: 12px 0; display: flex; flex-wrap: wrap; gap: 4px 28px; counter-reset: st; }
+.process li { counter-increment: st; }
+.process a { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: var(--ink); text-decoration: none; font-size: 15.5px; font-weight: 600; }
+.process a::before { content: counter(st); font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; color: var(--muted); }
+.process a:hover { color: var(--pine); }
+
+section.band { padding-block: 64px; }
+section.band + section.band { border-top: 1px solid var(--rule); }
+.note { display: inline-block; background: var(--slip); color: var(--slip-ink); font-size: 15px; font-weight: 600; padding: 7px 12px; border-radius: 6px; margin: 0 0 8px; }
+.statement { margin-top: 30px; max-width: 64ch; }
+.statement p:last-child { margin: 8px 0 0; font-family: var(--font-display); font-stretch: 102%; font-size: clamp(20px, 2.4vw, 24px); line-height: 1.38; font-weight: 640; }
+
+.findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 28px; margin-top: 26px; }
+.finding { padding: 20px 0 22px; border-top: 1px solid var(--rule); min-width: 0; }
+.finding h3 { margin-bottom: 8px; }
+.finding p { margin: 0 0 8px; font-size: 16px; }
+.finding .src { font-size: 14px; color: var(--muted); }
+
+.persona-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 22px; align-items: start; }
+@media (min-width: 880px) { .persona-grid { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); } }
+.persona { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 24px; min-width: 0; }
+.stamp { display: inline-block; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--slip-ink); background: var(--slip); padding: 5px 9px; border-radius: 4px; }
+.p-head { display: flex; gap: 14px; align-items: center; margin: 16px 0 14px; }
+.avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--slip); color: var(--slip-ink); display: grid; place-items: center; font-family: var(--font-display); font-weight: 760; font-size: 24px; flex: none; }
+.p-name { margin: 0; font-family: var(--font-display); font-stretch: 106%; font-weight: 720; font-size: 24px; line-height: 1.1; }
+.p-meta { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+.p-facts { margin: 0 0 18px; padding-left: 18px; font-size: 15.5px; }
+.p-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px 22px; }
+.p-cols ul, .empathy ul { margin: 6px 0 0; padding-left: 18px; font-size: 15.5px; }
+.p-quote { margin: 20px 0 0; font-family: var(--font-display); font-size: 19px; line-height: 1.35; font-weight: 620; }
+.empathy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 10px; border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; background: var(--surface); }
+.empathy > div { padding: 18px 18px 20px; min-width: 0; }
+.empathy > div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+.empathy > div:nth-child(odd) { border-right: 1px solid var(--rule); }
+@media (max-width: 540px) {
+  .empathy { grid-template-columns: minmax(0, 1fr); }
+  .empathy > div { border-right: 0 !important; border-bottom: 1px solid var(--rule); }
+  .empathy > div:last-child { border-bottom: 0; }
+}
+
+.scroll-x { overflow-x: auto; margin-top: 18px; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; }
+table.journey { min-width: 840px; table-layout: fixed; font-size: 15px; }
+.journey th, .journey td, .a11y th, .a11y td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--rule); }
+.journey thead th { font-family: var(--font-display); font-size: 16px; font-weight: 700; line-height: 1.25; }
+.journey tbody th, .a11y thead th { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.journey tr:last-child th, .journey tr:last-child td, .a11y tr:last-child td { border-bottom: 0; }
+.journey .feels td { font-weight: 650; }
+.journey .opp td { color: var(--pine); font-weight: 600; }
+.journey .mood td { padding-block: 6px; }
+.mood svg { display: block; width: 100%; height: auto; }
+.mood-base { stroke: var(--rule); stroke-width: 2; stroke-dasharray: 6 8; fill: none; }
+.mood-line { stroke: var(--slip-ink); stroke-width: 3; fill: none; stroke-linejoin: round; }
+.mood-dot { fill: var(--surface); stroke: var(--slip-ink); stroke-width: 3; }
+
+.principles { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0 30px; }
+.principles li { padding: 16px 0 18px; border-top: 1px solid var(--rule); min-width: 0; }
+.principles strong { display: block; font-family: var(--font-display); font-stretch: 104%; font-size: 18.5px; font-weight: 690; margin-bottom: 4px; }
+.principles span { font-size: 15.5px; color: var(--muted); }
+
+.flow { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 10px; align-items: center; }
+.flow li { display: flex; align-items: center; gap: 10px; }
+.flow li:not(:last-child)::after { content: "\2192" / ""; color: var(--muted); font-size: 18px; }
+.node { border: 1.5px solid var(--ink); border-radius: 8px; padding: 7px 12px; background: var(--surface); font-size: 15px; font-weight: 600; }
+.node.est { background: var(--slip); color: var(--slip-ink); border-color: var(--slip-ink); }
+.node.end { background: var(--pine); color: var(--surface); border-color: var(--pine); }
+.flow-note { margin: 16px 0 0; font-size: 15.5px; color: var(--muted); max-width: 70ch; }
+.flow-note b { color: var(--ink); }
+
+.decisions { margin-top: 26px; border-top: 1px solid var(--rule); }
+.decision { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px 36px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+@media (min-width: 880px) { .decision { grid-template-columns: minmax(0, 1fr) 230px; } }
+.decision h3 { font-size: 22px; margin-bottom: 12px; }
+.decision dl { margin: 0; display: grid; gap: 10px; }
+.decision dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.decision dd { margin: 2px 0 0; font-size: 16px; max-width: 66ch; }
+.decision .side { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.decision .side p { margin: 0; font-size: 14.5px; color: var(--muted); }
+.see { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--pine); background: transparent; color: var(--pine); font: 650 15px var(--font-body); cursor: pointer; }
+.see:hover { background: var(--pine); color: var(--surface); }
+
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(214px, 1fr)); gap: 34px 20px; margin-top: 22px; justify-items: center; }
+.gallery figure { margin: 0; width: 214px; display: flex; flex-direction: column; gap: 12px; }
+.mini { width: 214px; height: 423px; overflow: hidden; }
+.mini .phone { width: 344px; max-width: none; transform: scale(0.622); transform-origin: top left; box-shadow: none; }
+.gallery figcaption { font-size: 14.5px; line-height: 1.42; color: var(--muted); }
+.gallery figcaption b { display: block; color: var(--ink); font-family: var(--font-display); font-size: 15.5px; }
+
+table.a11y { min-width: 580px; font-size: 15.5px; }
+.a11y td:first-child { width: 38%; font-weight: 600; }
+.code { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--muted); margin-right: 6px; }
+
+.plan { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px 40px; margin-top: 8px; }
+@media (min-width: 880px) { .plan { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.plan h3 { margin: 22px 0 8px; }
+.plan p { margin: 0; }
+.plan ol, .plan ul { margin: 0; padding-left: 22px; }
+.plan li { margin-bottom: 6px; }
+.hyp { margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.hyp p { margin: 0; padding: 16px 18px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; }
+.hyp b { display: block; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.reflect { margin-top: 10px; }
+
+footer { border-top: 1px solid var(--rule); padding-block: 40px 56px; font-size: 15px; }
+.sources ol { padding-left: 22px; margin: 10px 0 0; }
+.sources li { margin-bottom: 6px; overflow-wrap: anywhere; }
+.disclaimer { color: var(--muted); font-size: 14.5px; max-width: 70ch; margin: 24px 0 0; }
+.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; margin-top: 22px; }
+.contact a { display: inline-flex; align-items: center; min-height: 40px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+@media print {
+  @page { size: Letter; margin: 12mm 12mm; }
+  :root { --paper: #FFFFFF; --surface: #FFFFFF; }
+  html { scroll-behavior: auto; }
+  body { font-size: 10pt; line-height: 1.45; }
+  .wrap { max-width: none; padding-left: 0; padding-right: 0; }
+  .process, .see, .proto-col, .decision .side { display: none !important; }
+  .top-in { padding-block: 0 8px; }
+  .hero { padding-top: 12px; }
+  .print-only { display: block; font-size: 10pt; margin: 14px 0 0; }
+  .hero { padding-block: 0 10px; }
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  h1 { font-size: 34px; margin-block: 8px 10px; }
+  .lede { font-size: 12pt; margin-bottom: 14px; }
+  .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 18px; padding-top: 12px; }
+  .facts dd { font-size: 9.5pt; }
+  section.band { padding-block: 16px; }
+  section.band + section.band { border-top: 1px solid var(--rule); }
+  h2.sec { font-size: 22px; margin-block: 4px 10px; }
+  h2.hmw { font-size: 19px; }
+  h3.sub { font-size: 17px; margin-block: 20px 4px; }
+  h3 { font-size: 13pt; }
+  h2.sec, h2.hmw, h3.sub, h3, .label { break-after: avoid; }
+  .prose p, .finding p { margin-bottom: 6px; }
+  .statement { margin-top: 12px; }
+  .statement p:last-child { font-size: 13pt; }
+  .note { font-size: 9.5pt; padding: 4px 9px; }
+  .findings { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 10px; }
+  .finding { padding: 10px 0 10px; }
+  .finding p { font-size: 10pt; }
+  .persona-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-top: 10px; }
+  .persona { padding: 14px; }
+  .p-cols ul, .empathy ul, .p-facts { font-size: 9.5pt; }
+  .p-quote { font-size: 11pt; margin-top: 10px; }
+  .empathy > div { padding: 10px 12px; }
+  .scroll-x { overflow: visible; margin-top: 8px; }
+  table.journey { min-width: 0; font-size: 8.5pt; }
+  .journey th, .journey td, .a11y th, .a11y td { padding: 6px 8px; }
+  table.a11y { min-width: 0; font-size: 9.5pt; }
+  .principles { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 10px; gap: 0 18px; }
+  .principles li { padding: 8px 0 10px; }
+  .principles strong { font-size: 11pt; }
+  .principles span { font-size: 9.5pt; }
+  .flow { margin-top: 10px; gap: 8px 6px; }
+  .node { font-size: 9pt; padding: 4px 8px; }
+  .flow-note { font-size: 9.5pt; margin-top: 8px; }
+  .decisions { margin-top: 10px; }
+  .decision { grid-template-columns: minmax(0, 1fr); padding: 10px 0; }
+  .decision h3 { font-size: 12pt; margin-bottom: 4px; }
+  .decision dl { gap: 2px; }
+  .decision dl > div { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 10px; }
+  .decision dd { font-size: 10pt; margin: 0; }
+  .gallery { grid-template-columns: repeat(4, 172px); justify-content: space-between; gap: 18px 10px; margin-top: 10px; }
+  .gallery figure { width: 172px; gap: 6px; }
+  .mini { width: 172px; height: 340px; }
+  .mini .phone { transform: scale(0.5); }
+  .gallery figcaption { font-size: 8.5pt; }
+  .gallery figcaption b { font-size: 9.5pt; }
+  .plan { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 28px; }
+  .plan h3 { margin: 10px 0 4px; }
+  .plan li { margin-bottom: 2px; }
+  .hyp { margin-top: 12px; gap: 10px; }
+  .hyp p { padding: 8px 12px; }
+  footer { padding-block: 14px 0; font-size: 9.5pt; }
+  .persona, .empathy, .decision, .gallery figure, .hyp p, tr, .flow, .statement, .keep { break-inside: avoid; }
+  #design { break-before: page; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in"><a class="who" href="../">Sulejman Kanapari</a><span class="kind">UX case study</span></div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Concept project · Mobile web · October 2026</p>
+        <h1>A car insurance quote you can finish on your phone</h1>
+        <p class="lede">Online car insurance quotes often mean a long form, unfamiliar terms and a price with no explanation. I designed a mobile quote flow for Kova, a fictional Ontario insurer. It shows an early estimate after three questions, explains each coverage in plain words, and passes your answers to a broker so you never repeat them.</p>
+        <dl class="facts">
+          <div><dt>Role</dt><dd>Solo project: research, UX and UI design, prototype</dd></div>
+          <div><dt>Research</dt><dd>Desk research only. No interviews yet, and assumptions are marked</dd></div>
+          <div><dt>Methods</dt><dd>Proto-persona, empathy map, journey map, user flow, WCAG 2.2 review, test plan</dd></div>
+          <div><dt>Tools</dt><dd>HTML, CSS and JavaScript prototype</dd></div>
+        </dl>
+        <p class="print-only" id="print-link">Clickable prototype and web version: <a href="https://sulejmankanaparii-sys.github.io/car-insurance-quote/">sulejmankanaparii-sys.github.io/car-insurance-quote</a></p>
+      </div>
+      <div class="proto-col">
+        <div class="phone" id="prototype"><div class="ph-screen" id="kq-screen" role="region" aria-label="Kova quote prototype"></div></div>
+        <p class="proto-note">Live prototype. Tap through it. Prices are examples, and nothing you type leaves this page.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="process" aria-label="Design process">
+    <div class="wrap">
+      <ol>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#define">Define</a></li>
+        <li><a href="#design">Design</a></li>
+        <li><a href="#accessibility">Accessibility</a></li>
+        <li><a href="#validate">Validation plan</a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <section class="band" id="problem">
+    <div class="wrap">
+      <div class="prose">
+        <p class="label">The problem</p>
+        <h2 class="sec">A long form stands between people and a price</h2>
+        <p>Insurers need a lot of information to price a policy. <a href="https://www.brokerlink.ca/blog/what-documents-do-i-need-for-car-insurance">BrokerLink's guide</a> says a basic quote needs your age, your location and your car's make, model and year. A more accurate one also needs your licence number, the car's VIN and your history of tickets and accidents.</p>
+        <p>Long forms lose people. In <a href="https://baymard.com/blog/ecommerce-checkout-usability-report-and-benchmark">Baymard Institute's checkout research</a>, 17% of US online shoppers said they had abandoned an order in the past quarter because the checkout was too long or complicated. That research is about shopping checkouts. The lesson about extra fields still applies to quote forms.</p>
+        <p>Choices also got harder in Ontario. <a href="https://www.fsrao.ca/industry/auto-insurance/changes-statutory-accident-benefits-coverage-ontario-july-1-2026">As of July 2026</a>, most statutory accident benefits are optional. Only medical, rehabilitation and attendant care benefits stay mandatory. More choice means more decisions for people who may not know the terms.</p>
+      </div>
+      <div class="statement">
+        <p class="label">Problem statement</p>
+        <p>People who are new to car insurance in Ontario struggle to finish an online quote, because the form is long, the terms are unfamiliar and the price arrives without an explanation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="research">
+    <div class="wrap">
+      <div class="prose">
+        <p class="label">1 · Research</p>
+        <h2 class="sec">What I learned from desk research</h2>
+        <p class="note">No interviews in this round. Findings come from public sources, and assumptions are labelled.</p>
+      </div>
+      <div class="findings">
+        <div class="finding">
+          <h3>A first price can come early</h3>
+          <p>Age, location and the car are enough for a basic quote. The rest can come after the person sees a number.</p>
+          <p class="src">Source: <a href="https://www.brokerlink.ca/blog/what-documents-do-i-need-for-car-insurance">BrokerLink</a></p>
+        </div>
+        <div class="finding">
+          <h3>One question per page is easier</h3>
+          <p>Asking one question per page helps people understand what they need to do. When the question is also the heading, screen reader users hear it only once.</p>
+          <p class="src">Source: <a href="https://design-system.service.gov.uk/patterns/question-pages">GOV.UK Design System</a></p>
+        </div>
+        <div class="finding">
+          <h3>Ontario coverage has new choices</h3>
+          <p>From July 2026, most accident benefits are optional. People need plain explanations and a sensible default to choose well.</p>
+          <p class="src">Source: <a href="https://www.fsrao.ca/industry/auto-insurance/changes-statutory-accident-benefits-coverage-ontario-july-1-2026">FSRA</a></p>
+        </div>
+        <div class="finding">
+          <h3>Accessibility is the law here</h3>
+          <p>Ontario organizations with 50 or more employees must make public websites meet WCAG 2.0 Level AA. WCAG 2.2 adds rules that matter for long forms, like not asking for the same information twice.</p>
+          <p class="src">Sources: <a href="https://ontario.ca/page/how-make-websites-accessible">Government of Ontario</a>, <a href="https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/">W3C</a></p>
+        </div>
+      </div>
+
+      <h3 class="sub">Who I designed for</h3>
+      <div class="persona-grid">
+        <article class="persona" aria-label="Proto-persona">
+          <span class="stamp">Proto-persona · assumption-based</span>
+          <div class="p-head">
+            <div class="avatar" aria-hidden="true">A</div>
+            <div><p class="p-name">Amira, 29</p><p class="p-meta">Pharmacy assistant in Toronto. Moved to Canada two years ago.</p></div>
+          </div>
+          <ul class="p-facts">
+            <li>Buying her first car insurance in Canada, for a used 2019 Honda Civic</li>
+            <li>Drove for six years before moving. Has an Ontario G2 licence</li>
+            <li>Does most things on her phone. English is her second language</li>
+          </ul>
+          <div class="p-cols">
+            <div><p class="label">Goals</p><ul><li>Get a fair price without a long evening of forms</li><li>Understand what she is paying for</li><li>Know if her driving abroad counts</li></ul></div>
+            <div><p class="label">Frustrations</p><ul><li>Terms like DC-PD mean nothing to her</li><li>Forms ask for documents she doesn't have on hand</li><li>A price with no reason behind it</li><li>Repeating everything on the phone</li></ul></div>
+          </div>
+          <p class="p-quote">"I just want to know what it costs and what I'm getting."</p>
+        </article>
+        <div>
+          <p class="label">Empathy map · assumption-based</p>
+          <div class="empathy">
+            <div><p class="label">Says</p><ul><li>"Why do they need my VIN?"</li><li>"Is this price normal?"</li></ul></div>
+            <div><p class="label">Thinks</p><ul><li>Will my experience back home count?</li><li>Am I buying something I don't need?</li></ul></div>
+            <div><p class="label">Does</p><ul><li>Compares two or three sites on her phone during her commute</li><li>Stops when a form asks for a document she doesn't have</li></ul></div>
+            <div><p class="label">Feels</p><ul><li>Unsure about the terms</li><li>Rushed</li><li>Worried about paying too much</li></ul></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keep">
+      <h3 class="sub">Her journey today</h3>
+      <p class="sub-note">Assumed journey, based on the research above.</p>
+      <div class="scroll-x" role="region" aria-label="Journey map" tabindex="0">
+        <table class="journey">
+          <colgroup><col style="width:128px"><col><col><col><col><col></colgroup>
+          <thead>
+            <tr><th scope="col"><span class="vh">Row</span></th><th scope="col">Starts a quote</th><th scope="col">Enters details</th><th scope="col">Meets insurance terms</th><th scope="col">Sees the price</th><th scope="col">Decides</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Does</th><td>Opens a quote form on her phone during her commute</td><td>Types her address, car and licence details</td><td>Sees "accident benefits" and "DC-PD"</td><td>Gets one monthly number</td><td>Calls to ask questions</td></tr>
+            <tr class="feels"><th scope="row">Feels</th><td>Hopeful</td><td>Impatient</td><td>Confused</td><td>Surprised</td><td>Tired</td></tr>
+            <tr class="mood"><th scope="row">Mood</th><td colspan="5">
+              <svg viewBox="0 0 1000 90" role="img" aria-label="Mood starts hopeful and falls to confused and tired by the end">
+                <line class="mood-base" x1="20" y1="45" x2="980" y2="45"></line>
+                <polyline class="mood-line" points="100,18 300,45 500,72 700,62 900,72"></polyline>
+                <circle class="mood-dot" cx="100" cy="18" r="8"></circle>
+                <circle class="mood-dot" cx="300" cy="45" r="8"></circle>
+                <circle class="mood-dot" cx="500" cy="72" r="8"></circle>
+                <circle class="mood-dot" cx="700" cy="62" r="8"></circle>
+                <circle class="mood-dot" cx="900" cy="72" r="8"></circle>
+              </svg>
+            </td></tr>
+            <tr><th scope="row">Pain point</th><td>Doesn't know how long it takes or what she needs</td><td>Many questions before any price</td><td>Terms aren't explained where she needs them</td><td>No idea what makes it high</td><td>Has to repeat everything on the phone</td></tr>
+            <tr class="opp"><th scope="row">Opportunity</th><td>Say how long it takes and what to have ready</td><td>Show an early estimate after three answers</td><td>Explain each term in place, in plain words</td><td>Break the price down and show what lowers it</td><td>Pass her answers to a broker</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="define">
+    <div class="wrap">
+      <p class="label">2 · Define</p>
+      <h2 class="hmw">How might we help a newcomer like Amira get a price she understands, on her phone, without repeating herself?</h2>
+      <ul class="principles">
+        <li><strong>Price early, details later</strong><span>Show an estimate after three answers, then refine it.</span></li>
+        <li><strong>One question per screen</strong><span>The question is the heading, so it is clear and read once by screen readers.</span></li>
+        <li><strong>Plain words, explained in place</strong><span>Every insurance term has a short explanation next to it.</span></li>
+        <li><strong>Help in the same place</strong><span>"Talk to a broker" sits in the same spot on every screen.</span></li>
+        <li><strong>Never ask twice</strong><span>Answers follow the person to the broker and to a saved quote.</span></li>
+      </ul>
+
+      <h3 class="sub">The flow</h3>
+      <ol class="flow" aria-label="Quote flow">
+        <li><span class="node">Start</span></li>
+        <li><span class="node">Postal code</span></li>
+        <li><span class="node">Car</span></li>
+        <li><span class="node">Date of birth</span></li>
+        <li><span class="node est">Early estimate</span></li>
+        <li><span class="node">Licence</span></li>
+        <li><span class="node">Experience</span></li>
+        <li><span class="node">Driving record</span></li>
+        <li><span class="node">Coverage</span></li>
+        <li><span class="node">Price</span></li>
+        <li><span class="node end">Buy online or talk to a broker</span></li>
+      </ol>
+      <p class="flow-note">From any screen, people can choose <b>Talk to a broker</b> or <b>Save and finish later</b>. Six short questions come before coverage, and the estimate appears after the third.</p>
+    </div>
+  </section>
+
+  <section class="band" id="design">
+    <div class="wrap">
+      <p class="label">3 · Design</p>
+      <h2 class="sec">Key decisions</h2>
+      <p class="prose">Each decision opens the matching screen in the live prototype at the top of this page.</p>
+      <div class="decisions">
+        <div class="decision">
+          <div>
+            <h3>Show an estimate after three answers</h3>
+            <dl>
+              <div><dt>Problem</dt><dd>People answer many questions before they see any price.</dd></div>
+              <div><dt>Decision</dt><dd>After postal code, car and date of birth, a price range appears and stays visible while the person finishes.</dd></div>
+              <div><dt>Why</dt><dd>BrokerLink lists age, location and the car as enough for a basic quote.</dd></div>
+            </dl>
+          </div>
+          <div class="side"><p>Screen: Early estimate</p><button class="see" type="button" data-show="licence">See it in the prototype</button></div>
+        </div>
+        <div class="decision">
+          <div>
+            <h3>One question per screen</h3>
+            <dl>
+              <div><dt>Problem</dt><dd>Long pages of fields feel like work, and mistakes are hard to find.</dd></div>
+              <div><dt>Decision</dt><dd>Each screen asks one thing, and the question is both the heading and the label. Errors say how to fix them.</dd></div>
+              <div><dt>Why</dt><dd>GOV.UK Design System guidance on question pages.</dd></div>
+            </dl>
+          </div>
+          <div class="side"><p>Screen: Postal code</p><button class="see" type="button" data-show="postal">See it in the prototype</button></div>
+        </div>
+        <div class="decision">
+          <div>
+            <h3>Count driving experience from abroad</h3>
+            <dl>
+              <div><dt>Problem</dt><dd>Newcomers like Amira may not know that years of driving abroad can matter.</dd></div>
+              <div><dt>Decision</dt><dd>The experience question says to include years outside Canada and names the document to ask for: a letter of experience.</dd></div>
+              <div><dt>Why</dt><dd>BrokerLink's guide lists experience letters from outside the province as part of buying a policy.</dd></div>
+            </dl>
+          </div>
+          <div class="side"><p>Screen: Experience</p><button class="see" type="button" data-show="experience">See it in the prototype</button></div>
+        </div>
+        <div class="decision">
+          <div>
+            <h3>Explain coverage where people choose it</h3>
+            <dl>
+              <div><dt>Problem</dt><dd>Terms like DC-PD are confusing, and Ontario added new choices in July 2026.</dd></div>
+              <div><dt>Decision</dt><dd>Required coverage is already included, and each item has a "What's this?" explanation. Optional coverage shows its monthly cost, and the total updates as you choose.</dd></div>
+              <div><dt>Why</dt><dd>FSRA's standard policy page and the July 2026 change to accident benefits.</dd></div>
+            </dl>
+          </div>
+          <div class="side"><p>Screen: Coverage</p><button class="see" type="button" data-show="coverage">See it in the prototype</button></div>
+        </div>
+        <div class="decision">
+          <div>
+            <h3>Make the price readable</h3>
+            <dl>
+              <div><dt>Problem</dt><dd>A single number gives no reason and no way to change it.</dd></div>
+              <div><dt>Decision</dt><dd>The price screen breaks the total into parts, shows what shapes it, and lets you trade a higher deductible for a lower price.</dd></div>
+              <div><dt>Why</dt><dd>The "Sees the price" pain point in the journey map.</dd></div>
+            </dl>
+          </div>
+          <div class="side"><p>Screen: Price</p><button class="see" type="button" data-show="price">See it in the prototype</button></div>
+        </div>
+        <div class="decision">
+          <div>
+            <h3>Help in one place, answers never repeated</h3>
+            <dl>
+              <div><dt>Problem</dt><dd>Calling for help usually means starting over.</dd></div>
+              <div><dt>Decision</dt><dd>"Talk to a broker" is in the same place on every screen, and the broker receives every answer given so far.</dd></div>
+              <div><dt>Why</dt><dd>WCAG 2.2 criteria 3.2.6 Consistent Help and 3.3.7 Redundant Entry.</dd></div>
+            </dl>
+          </div>
+          <div class="side"><p>Screen: Broker call booked</p><button class="see" type="button" data-show="done">See it in the prototype</button></div>
+        </div>
+      </div>
+
+      <h3 class="sub">All screens</h3>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <section class="band" id="accessibility">
+    <div class="wrap">
+      <p class="label">4 · Accessibility</p>
+      <h2 class="sec">Accessibility built in from the first screen</h2>
+      <div class="prose"><p>A real version would need to meet WCAG 2.0 Level AA under Ontario's accessibility law (AODA). I designed for WCAG 2.2 Level AA, which builds on it. This table lists what the prototype does today.</p></div>
+      <div class="scroll-x" role="region" aria-label="Accessibility checklist" tabindex="0">
+        <table class="a11y">
+          <thead><tr><th scope="col">WCAG 2.2 criterion</th><th scope="col">What the prototype does</th></tr></thead>
+          <tbody>
+            <tr><td><span class="code">1.3.1</span>Info and relationships<br><span class="code">3.3.2</span>Labels or instructions</td><td>Every input has a visible label, and the question is the screen heading. Groups of choices use a fieldset and legend.</td></tr>
+            <tr><td><span class="code">3.3.1</span>Error identification<br><span class="code">3.3.3</span>Error suggestion</td><td>Errors appear as text next to the field and in a summary at the top, and each one says how to fix it.</td></tr>
+            <tr><td><span class="code">2.4.3</span>Focus order<br><span class="code">2.4.7</span>Focus visible</td><td>Focus moves to the new question on each screen, and every control shows a clear outline.</td></tr>
+            <tr><td><span class="code">2.5.8</span>Target size (minimum)</td><td>Buttons and choices are at least 48 px tall, twice the 24 px minimum.</td></tr>
+            <tr><td><span class="code">2.4.11</span>Focus not obscured (minimum)</td><td>The sticky button bar never covers the field you are on.</td></tr>
+            <tr><td><span class="code">3.2.6</span>Consistent help</td><td>"Talk to a broker" is in the same place on every screen.</td></tr>
+            <tr><td><span class="code">3.3.7</span>Redundant entry</td><td>The broker receives your answers, so you never type them twice.</td></tr>
+            <tr><td><span class="code">3.3.8</span>Accessible authentication (minimum)</td><td>Save and finish later uses an email link. There is no password to remember.</td></tr>
+            <tr><td><span class="code">1.4.3</span>Contrast (minimum)</td><td>Text has a contrast ratio of at least 4.5:1.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub-note">Not yet tested with screen reader users. That is part of the test plan below.</p>
+    </div>
+  </section>
+
+  <section class="band" id="validate">
+    <div class="wrap">
+      <p class="label">5 · Validation plan</p>
+      <h2 class="sec">How I would test it</h2>
+      <div class="prose"><p>This design has not been tested with users yet. Here is the plan for the first round.</p></div>
+      <div class="plan">
+        <div>
+          <h3>Who</h3>
+          <p>Five people: two newcomers buying their first policy in Canada, two people renewing or switching insurers, and one screen reader user. Testing with five people finds most of the problems in a design, according to <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">Nielsen Norman Group</a>.</p>
+          <h3>Tasks</h3>
+          <ol>
+            <li>Get a price for this car.</li>
+            <li>Find out what accident benefits cover.</li>
+            <li>Lower your monthly price without removing required coverage.</li>
+            <li>Ask a broker to call you tomorrow.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>What I would measure</h3>
+          <ul>
+            <li>Task success and time on each task</li>
+            <li>Time to the first estimate</li>
+            <li>Errors on each screen</li>
+            <li>System Usability Scale (SUS) score</li>
+          </ul>
+          <h3>After launch, with analytics</h3>
+          <ul>
+            <li>Share of started quotes that reach a price</li>
+            <li>Drop-off on each screen</li>
+            <li>"What's this?" taps for each term</li>
+            <li>Broker calls booked and quotes saved for later</li>
+          </ul>
+        </div>
+      </div>
+      <div class="hyp">
+        <p><b>Hypothesis</b>If people see an estimate after three answers, more of them will reach the final price.</p>
+        <p><b>Hypothesis</b>If coverage terms are explained in place, fewer people will call with basic questions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="next">
+    <div class="wrap">
+      <p class="label">Next</p>
+      <h2 class="sec">What I would do next</h2>
+      <ul class="principles">
+        <li><strong>Talk to real people</strong><span>Interview recent buyers and brokers to replace my assumptions with findings.</span></li>
+        <li><strong>Run the first test</strong><span>Test with five people and fix the biggest problems first.</span></li>
+        <li><strong>Check the estimate</strong><span>Work with pricing experts so the early range stays honest.</span></li>
+        <li><strong>Build the components</strong><span>Turn the screens into reusable Figma components for a design system.</span></li>
+      </ul>
+      <div class="prose reflect">
+        <h3 class="sub">What I learned</h3>
+        <p>Most of the work was deciding what not to ask yet. Moving the estimate earlier changed the order of every other question.</p>
+        <p>Accessibility shaped the design from the start. Rules like "don't ask twice" and "keep help in one place" made the flow simpler for everyone.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="sources">
+      <p class="label">Sources</p>
+      <ol>
+        <li><a href="https://www.brokerlink.ca/blog/what-documents-do-i-need-for-car-insurance">BrokerLink: What documents do I need for car insurance?</a></li>
+        <li><a href="https://baymard.com/blog/ecommerce-checkout-usability-report-and-benchmark">Baymard Institute: Checkout usability research</a></li>
+        <li><a href="https://design-system.service.gov.uk/patterns/question-pages">GOV.UK Design System: Question pages</a></li>
+        <li><a href="https://www.fsrao.ca/industry/auto-insurance/changes-statutory-accident-benefits-coverage-ontario-july-1-2026">FSRA: Changes to statutory accident benefits coverage in Ontario</a></li>
+        <li><a href="https://fsrao.ca/consumers/auto-insurance/purchasing-your-policy/what-standard-auto-insurance-policy">FSRA: What is a standard auto insurance policy?</a></li>
+        <li><a href="https://ontario.ca/page/how-make-websites-accessible">Government of Ontario: How to make websites accessible</a></li>
+        <li><a href="https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/">W3C: What's new in WCAG 2.2</a></li>
+        <li><a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">Nielsen Norman Group: Why you only need to test with 5 users</a></li>
+      </ol>
+    </div>
+    <p class="disclaimer">Kova is a fictional insurer made for this project. Prices are examples. Coverage notes summarize FSRA pages as of October 2026 and are not insurance advice.</p>
+    <div class="contact">
+      <b>Sulejman Kanapari</b>
+      <span>Kanaparisulejman@gmail.com</span>
+      <a href="https://www.linkedin.com/in/sulejman-k-6a522625a">LinkedIn</a>
+      <a href="https://github.com/sulejmankanaparii-sys">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script src="prototype.js"></script>
+<script>
+(() => {
+  const proto = Kova.live(document.getElementById("kq-screen"));
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-show]");
+    if (!b) return;
+    const heading = proto.show(b.dataset.show);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.getElementById("prototype").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    setTimeout(() => { if (heading) heading.focus({ preventScroll: true }); }, reduce ? 0 : 500);
+  });
+  const booked = Object.assign(Kova.sample(), { slot: Kova.SLOTS[1], phone: "4165550123" });
+  const G = [
+    ["start", Kova.blank(), null, "Start", "Says how long it takes and what to have ready."],
+    ["postal", Kova.blank(), { postal: "Enter your postal code" }, "Postal code, with an error", "One question per screen. The error says how to fix it."],
+    ["car", Kova.sample(), null, "Car", "Year, make and model, or a plate lookup."],
+    ["licence", Kova.sample(), null, "Early estimate", "A price range appears after three answers."],
+    ["experience", Kova.sample(), null, "Driving experience", "Years driving abroad can count."],
+    ["coverage", Kova.sample(), null, "Coverage", "Required coverage is included and explained."],
+    ["price", Kova.sample(), null, "Price", "A breakdown and a deductible trade-off."],
+    ["done", booked, null, "Broker call booked", "The broker sees every answer."]
+  ];
+  document.getElementById("gallery").innerHTML = G.map((g, i) => `<figure><div class="mini"><div class="phone" inert aria-hidden="true"><div class="ph-screen">${Kova.screen(g[0], g[1], "g" + i, g[2])}</div></div></div><figcaption><b>${g[3]}</b>${g[4]}</figcaption></figure>`).join("");
+})();
+</script>
+</body>
+</html>
